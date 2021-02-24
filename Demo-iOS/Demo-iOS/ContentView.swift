@@ -65,6 +65,7 @@ struct ContentView: View {
                code: $codeBlock,
                mode: codeMode,
                fontSize: fontSize,
+               readOnly: false,
                lineWrapping: lineWrapping)
         .onLoadSuccess {
           print("Loaded")

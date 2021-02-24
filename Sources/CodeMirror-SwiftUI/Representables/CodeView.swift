@@ -28,6 +28,7 @@ public struct CodeView: RepresentableView {
   var theme: CodeViewTheme
   var mode: Mode
   var fontSize: Int
+  var readOnly: Bool
   var showInvisibleCharacters: Bool
   var lineWrapping: Bool
   
@@ -40,12 +41,14 @@ public struct CodeView: RepresentableView {
               code: Binding<String>,
               mode: Mode,
               fontSize: Int = 12,
+              readOnly: Bool = false,
               showInvisibleCharacters: Bool = true,
               lineWrapping: Bool = true) {
     self._code = code
     self.mode = mode
     self.theme = theme
     self.fontSize = fontSize
+    self.readOnly = readOnly
     self.showInvisibleCharacters = showInvisibleCharacters
     self.lineWrapping = lineWrapping
   }
@@ -143,6 +146,7 @@ extension CodeView {
     webView.load(data, mimeType: "text/html", characterEncodingName: "utf-8", baseURL: codeMirrorBundle.resourceURL!)
 
     context.coordinator.setWebView(webView)
+    context.coordinator.setReadonly(readOnly)
     context.coordinator.setThemeName(theme.rawValue)
     
     context.coordinator.setMimeType(mode.mimeType)

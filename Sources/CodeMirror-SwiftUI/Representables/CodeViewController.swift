@@ -185,7 +185,15 @@ extension CodeViewController {
   }
   
   func setReadonly(_ value: Bool) {
+    #if os(iOS)
+    if value {
+        callJavascript(javascriptString: "SetReadOnly('nocursor');")
+    } else {
+        callJavascript(javascriptString: "SetReadOnly(\(value));")
+    }
+    #elseif os(macOS)
     callJavascript(javascriptString: "SetReadOnly(\(value));")
+    #endif
   }
   
   func getTextSelection(_ block: JavascriptCallback?) {
